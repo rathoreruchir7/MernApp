@@ -55,7 +55,19 @@ function Profile(props){
     
 
     useEffect(() => {
-        console.log(props.auth)
+        const bearer = 'Bearer ' + localStorage.getItem('token');
+        axios.get('/profile', {
+            headers: {
+                'Authorization': bearer,
+                'Content-Type':'application/json',
+            }
+        })
+        .then((res) => {
+            console.log(res)
+            setName(res.data[0].name)
+            setUsername(res.data[0].username)
+        })
+       
     },[])
 
     const handleSave=()=>{
@@ -89,18 +101,21 @@ function Profile(props){
         setDisabled(false)
     }
 
-    return (
-        <div className={classes.root}>
-            <Paper >
-            <div className={classes.field}><Avatar alt="Remy Sharp" src="" style={{width: '60px', height: "60px"}} /><input type="file" id="profileUrl" name="profile" style={{display: ''}} onChange={(e) => setProfile(e.target.files[0])} /> </div>
-               <div className={classes.field}>Name: <input className={classes.inputStyle} id="title" name="title"  /></div>
-               <div className={classes.field}>Email: <input  className={classes.inputStyle} id="description" name="description"  /></div>
-
-               <div className={classes.field}><Button variant="contained" color="primary"  disabled={edit} onClick={handleEdit} >Edit</Button><Button variant="contained" color="primary" onClick={handleSave}>Save</Button></div>
-               
-            </Paper>
-        </div>
-    );
+    
+        return (
+            <div className={classes.root}>
+                <Paper >
+                <div className={classes.field}><Avatar alt="Remy Sharp" src="" style={{width: '60px', height: "60px"}} /><input type="file" id="profileUrl" name="profile" style={{display: isDisabled ? "none" : ""}} onChange={(e) => setProfile(e.target.files[0])}  /> </div>
+                   <div className={classes.field}>Name: <input className={classes.inputStyle} id="title" name="title" value={name} disabled={isDisabled} /></div>
+                   <div className={classes.field}>Email: <input  className={classes.inputStyle} id="description" name="description" value={username} disabled={isDisabled} /></div>
+    
+                   <div className={classes.field}><Button variant="contained" color="primary"  disabled={edit} onClick={handleEdit} >Edit</Button><Button variant="contained" color="primary" onClick={handleSave} disabled={isDisabled}>Save</Button></div>
+                   
+                </Paper>
+            </div>
+        );
+    
+    
 }
 
 const mapStateToProps = state => {

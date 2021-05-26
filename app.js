@@ -11,6 +11,7 @@ var config = require('./config');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var profileRouter = require('./routes/profile')
 var uploadRouter = require('./routes/uploadRouter');
 
 var app = express();
@@ -45,6 +46,7 @@ app.use(passport.initialize());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/profile', profileRouter)
 app.use('/imageUpload',uploadRouter);
 
 // catch 404 and forward to error handler
