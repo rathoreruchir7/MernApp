@@ -14,7 +14,10 @@ var User = new Schema({
     admin:   {
         type: Boolean,
         default: false
-    }
+    },
+    avatar: {
+      type: Buffer
+  }
 });
 
 User.plugin(passportLocalMongoose);
