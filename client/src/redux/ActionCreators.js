@@ -11,7 +11,8 @@ export const requestLogin = (creds) => {
 export const receiveLogin = (response) => {
     return {
         type: ActionTypes.LOGIN_SUCCESS,
-        token: response.token
+        token: response.token,
+        user: response.response
     }
 }
   
@@ -54,7 +55,8 @@ export const loginUser = (creds, history) => (dispatch) => {
         if (response.success) {
             // If login was successful, set the token in local storage
             localStorage.setItem('token', response.token);
-            localStorage.setItem('creds', JSON.stringify(creds));
+            console.log(response.response)
+            // localStorage.setItem('creds', JSON.stringify(creds));
             // Dispatch the success action
             
             dispatch(receiveLogin(response));
@@ -62,6 +64,7 @@ export const loginUser = (creds, history) => (dispatch) => {
         }
         else {
             var error = new Error('Error ' + response.status);
+            alert(error);
             error.response = response;
             throw error;
         }

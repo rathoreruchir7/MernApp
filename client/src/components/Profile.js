@@ -55,7 +55,7 @@ function Profile(props){
     
 
     useEffect(() => {
-
+        console.log(props.auth)
     },[])
 
     const handleSave=()=>{
