@@ -9,6 +9,8 @@ import axios from 'axios';
 import { set } from 'mongoose';
 import Dialog from '@material-ui/core/Dialog';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { logoutUser } from '../redux/ActionCreators';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: theme.spacing(2),
             marginRight: theme.spacing(2),
             width: theme.spacing(50),
-            height: theme.spacing(35),
+            height: theme.spacing(40),
         },
     },
 
@@ -157,8 +159,9 @@ function Profile(props){
                        <div className={classes.field}>Email: <input  className={classes.inputStyle} id="email" name="email" value={email} disabled={isDisabled} onChange={(e) => setEmail(e.target.value)} /></div>
         
                        <div className={classes.field}><Button variant="contained" color="primary"  disabled={edit} onClick={handleEdit} >Edit</Button><Button variant="contained" color="primary" onClick={handleSave} disabled={isDisabled}>Save</Button></div>
-                       
+                       <span onClick={() => props.logoutUser(props.history)} style={{fontWeight: "bold", cursor: "pointer"}}>Logout</span>
                     </Paper>
+                   
                 </div>
             );
         }
@@ -167,7 +170,6 @@ function Profile(props){
             return (
                 <div className={classes.loaderRoot} style={{marginTop: '300px'}}>
                   <CircularProgress />
-                
                 </div>        
                  );
         }
@@ -182,4 +184,8 @@ const mapStateToProps = state => {
     }
 }
 
-export default withRouter(connect(mapStateToProps, null)(Profile))
+const mapDispatchToProps = (dispatch) => ({
+    logoutUser: (history) => dispatch(logoutUser(history)),
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile))

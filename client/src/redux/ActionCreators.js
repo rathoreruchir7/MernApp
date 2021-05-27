@@ -157,10 +157,10 @@ export const receiveLogout = () => {
 }
 
 // Logs the user out
-export const logoutUser = () => (dispatch) => {
+export const logoutUser = (history) => (dispatch) => {
     dispatch(requestLogout())
     localStorage.removeItem('token');
-    localStorage.removeItem('creds');
+    history.push('/login');
     
     dispatch(receiveLogout())
 }
