@@ -8,6 +8,8 @@ import { withRouter } from 'react-router-dom';
 import Input from '@material-ui/core/Input';
 import axios from 'axios';
 import { set } from 'mongoose';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContent from '@material-ui/core/DialogContent';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
             marginLeft: theme.spacing(2),
             marginRight: theme.spacing(2),
             width: theme.spacing(50),
-            height: theme.spacing(30),
+            height: theme.spacing(35),
         },
     },
 
@@ -54,7 +56,7 @@ function Profile(props){
     const [profile, setProfile] = useState()
     const [isDisabled, setDisabled] = useState(true)
     const [edit, setEditDisabled] = useState(false)
-    
+    const [open, setOpen] = React.useState(false);
 
     useEffect(() => {
         const bearer = 'Bearer ' + localStorage.getItem('token');
@@ -72,6 +74,15 @@ function Profile(props){
         })
        
     },[])
+
+    const handleClickOpen = () => {
+        setOpen(true);
+      };
+    
+      const handleClose = () => {
+        setOpen(false);
+      };
+
 
     const handleSave=()=>{
 
@@ -118,8 +129,11 @@ function Profile(props){
     
         return (
             <div className={classes.root}>
+                <Dialog open={open} onClose={handleClose}>
+                    <Avatar alt={name} src={`${avatar}`} style={{width: '100%', height: "100%"}} variant="square" />
+                </Dialog>
                 <Paper >
-                <div className={classes.field}><Avatar alt="Remy Sharp" src={`${avatar}`} style={{width: '60px', height: "60px"}} /><input type="file" id="profile" name="profile" style={{display: isDisabled ? "none" : ""}} onChange={(e) => setProfile(e.target.files[0])}  /> </div>
+                <div className={classes.field}><Avatar alt="Remy Sharp" src={`${avatar}`} style={{width: '100px', height: "100px"}} onClick={handleClickOpen}/><input type="file" id="profile" name="profile" style={{display: isDisabled ? "none" : ""}} onChange={(e) => setProfile(e.target.files[0])}  /> </div>
                    <div className={classes.field}>Name: <input className={classes.inputStyle} id="title" name="title" value={name} disabled={isDisabled} onChange={(e) => setName(e.target.value)} /></div>
                    <div className={classes.field}>Email: <input  className={classes.inputStyle} id="email" name="email" value={email} disabled={isDisabled} onChange={(e) => setEmail(e.target.value)} /></div>
     
