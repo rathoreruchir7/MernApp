@@ -72,9 +72,10 @@ function Profile(props){
 
     useEffect(() => {
         const bearer = 'Bearer ' + localStorage.getItem('token');
+        console.log(bearer);
         axios.get('/profile', {
             headers: {
-                'Authorization': bearer,
+                Authorization: bearer,
                 'Content-Type':'application/json',
             }
         })
@@ -103,6 +104,7 @@ function Profile(props){
         formData.append("imageFile", profile)
         
         const bearer = 'Bearer ' + localStorage.getItem('token');
+
         if(profile){
             setSpinner(true)
             axios({
