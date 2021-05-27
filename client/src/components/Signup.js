@@ -68,8 +68,8 @@ function Signup(props) {
             <Paper className={classes.paper} >
                 <div className={classes.field}><TextField id="name" name="name" label="Name*" variant="outlined" onChange={(e) => setName(e.target.value)} /></div>
                 <div className={classes.field}><TextField id="username" name="username" label="Email*" variant="outlined" onChange={(e) => setUsername(e.target.value)} /></div>
-                <div className={classes.field}><TextField id="password" name="password" label="Password*" variant="outlined" onChange={(e) => setPassword(e.target.value)} /></div>
-                <div className={classes.field}><TextField id="confirmPwd" name="confirmPwd" label="Confirm Password*" variant="outlined" onChange={(e) => setConfirmPwd(e.target.value)} /></div>
+                <div className={classes.field}><TextField id="password" name="password" type="password" label="Password*" variant="outlined" onChange={(e) => setPassword(e.target.value)} /></div>
+                <div className={classes.field}><TextField id="confirmPwd" name="confirmPwd" type="password" label="Confirm Password*" variant="outlined" onChange={(e) => setConfirmPwd(e.target.value)} /></div>
 
                 <div className={classes.field}><Button variant="contained" color="primary" onClick={handleSignup}>Sign up</Button></div>
                 <div style={{ cursor: 'pointer' }} onClick={() => props.history.push('/login')}>Already a member, Login!</div>
