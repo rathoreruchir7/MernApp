@@ -118,7 +118,7 @@ function Profile(props){
         return (
             <div className={classes.root}>
                 <Paper >
-                <div className={classes.field}><Avatar alt="Remy Sharp" src={`http://localhost:5000/${avatar}`} style={{width: '60px', height: "60px"}} /><input type="file" id="profile" name="profile" style={{display: isDisabled ? "none" : ""}} onChange={(e) => setProfile(e.target.files[0])}  /> </div>
+                <div className={classes.field}><Avatar alt="Remy Sharp" src={`/${avatar}`} style={{width: '60px', height: "60px"}} /><input type="file" id="profile" name="profile" style={{display: isDisabled ? "none" : ""}} onChange={(e) => setProfile(e.target.files[0])}  /> </div>
                    <div className={classes.field}>Name: <input className={classes.inputStyle} id="title" name="title" value={name} disabled={isDisabled} onChange={(e) => setName(e.target.value)} /></div>
                    <div className={classes.field}>Email: <input  className={classes.inputStyle} id="email" name="email" value={email} disabled={isDisabled} onChange={(e) => setEmail(e.target.value)} /></div>
     

@@ -27,7 +27,7 @@ export const loginUser = (creds, history) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
     console.log(JSON.stringify(creds));
-    return fetch( `http://localhost:5000/` + 'users/login', {
+    return fetch('/users/login',{
         method: 'POST',
         headers: { 
         
@@ -99,7 +99,7 @@ export const signupUser = (creds, history) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestSignup(creds))
     console.log(JSON.stringify(creds));
-    return fetch( `http://localhost:5000/` +  'users/signup', {
+    return fetch('/users/signup', {
         method: 'POST',
         headers: { 
         
