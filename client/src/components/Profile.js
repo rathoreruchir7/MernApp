@@ -85,6 +85,7 @@ function Profile(props){
             setEmail(res.data[0].email)
             setAvatar(res.data[0].avatar)  
         })
+        .catch((err) => console.log(err));
        
     },[])
 
@@ -176,8 +177,6 @@ function Profile(props){
                  );
         }
        
-    
-    
 }
 
 const mapStateToProps = state => {
