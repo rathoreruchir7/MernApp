@@ -13,7 +13,7 @@ export const receiveLogin = (response) => {
     return {
         type: ActionTypes.LOGIN_SUCCESS,
         token: response.token,
-        user: response.response
+        user: response.response[0]
     }
 }
   
@@ -110,7 +110,8 @@ export const getProfile = () => (dispatch) => {
         console.log(res)
         dispatch(receiveProfile(res.data[0]))
     })
-    .catch((err) => dispatch(profileError(err.message)));
+    .catch((err) => {console.log(err)
+        dispatch(profileError(err.message))});
 
 
 }

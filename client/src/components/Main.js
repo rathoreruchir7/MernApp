@@ -32,9 +32,9 @@ function Main(props){
              <Switch>
                 <Route exact path = '/login' component={(props) => ( <Login loginUser={props.loginUser} {...props} />)} />
                 <Route exact path = '/signup' component= {(props) => ( <Signup signupUser={props.signupUser}  /> )} />
-                <Route exact path = '/profile' component={(props) => (<Profile auth={props.auth}/> )} />
+                <Route exact path = '/profile' component={(props) => (<Profile /> )} />
             
-                <Redirect to = {props.auth==undefined ? '/login' : '/profile'} />
+                <Redirect to = {props.auth.user==undefined ? '/login' : '/profile'} />
              </Switch>
        
     );

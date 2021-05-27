@@ -142,7 +142,7 @@ function Profile(props){
         setDisabled(false)
     }
 
-        if(!spinner){
+        if(props.auth.user!=undefined){
             return (
                 <div className={classes.root}>
                     <Dialog open={open} onClose={handleClose}>
