@@ -71,10 +71,14 @@ function Profile(props){
     const [spinner, setSpinner] = useState(false);
 
     useEffect(() => {
-        console.log(props.auth)
-        setAvatar(props.auth.user.avatar)
-        setName(props.auth.user.name)
-        setEmail(props.auth.user.email)
+        setSpinner(true)
+        if(props.auth.user!=undefined){
+            console.log(props.auth)
+            setAvatar(props.auth.user.avatar)
+            setName(props.auth.user.name)
+            setEmail(props.auth.user.email)
+            setSpinner(false)
+        }    
     },[])
 
     const handleClickOpen = () => {
