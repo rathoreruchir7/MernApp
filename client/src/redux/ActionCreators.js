@@ -26,7 +26,8 @@ export const loginError = (message) => {
 export const loginUser = (creds, history) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
-    console.log(JSON.stringify(creds));
+    console.log(localStorage.getItem("token"));
+    
     return fetch('/users/login',{
         method: 'POST',
         headers: { 
