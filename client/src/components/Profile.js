@@ -71,22 +71,10 @@ function Profile(props){
     const [spinner, setSpinner] = useState(false);
 
     useEffect(() => {
-        const bearer = 'Bearer ' + localStorage.getItem('token');
-        console.log(bearer);
-        axios.get('/profile', {
-            headers: {
-                Authorization: bearer,
-                'Content-Type':'application/json',
-            }
-        })
-        .then((res) => {
-            console.log(res)
-            setName(res.data[0].name)
-            setEmail(res.data[0].email)
-            setAvatar(res.data[0].avatar)  
-        })
-        .catch((err) => console.log(err));
-       
+        console.log(props.auth)
+        setAvatar(props.auth.user.avatar)
+        setName(props.auth.user.name)
+        setEmail(props.auth.user.email)
     },[])
 
     const handleClickOpen = () => {

@@ -43,6 +43,26 @@ export const Auth = (state = {
                 token: '',
                 user: null
             };
+            case ActionTypes.PROFILE_REQUEST:
+                return {...state,
+                    isLoading: true,
+                    isAuthenticated: false,
+                    // user: action.creds
+                };
+            case ActionTypes.PROFILE_SUCCESS:
+                return {...state,
+                    isLoading: false,
+                    isAuthenticated: true,
+                    errMess: '',
+                    token: action.token,
+                    user: action.user
+                };
+            case ActionTypes.PROFILE_FAILURE:
+                return {...state,
+                    isLoading: false,
+                    isAuthenticated: false,
+                    errMess: action.message
+                };
         default:
             return state
     }

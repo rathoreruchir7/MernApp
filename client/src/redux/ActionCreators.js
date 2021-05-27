@@ -1,4 +1,5 @@
 import * as ActionTypes from './ActionTypes';
+import axios from 'axios'
 
 /*================AUTH FUNCTIONALITY==================*/
 export const requestLogin = (creds) => {
@@ -45,10 +46,12 @@ export const loginUser = (creds, history) => (dispatch) => {
         } else {
             var error = new Error('Error ' + response.status + ': ' + response.statusText);
             error.response = response;
+            console.log(error)
             throw error;
         }
         },
         error => {
+            console.log(error)
             throw error;
         })
     .then(response => response.json())
@@ -67,13 +70,51 @@ export const loginUser = (creds, history) => (dispatch) => {
             var error = new Error('Error ' + response.status);
             alert(error);
             error.response = response;
+            console.log(error)
             throw error;
         }
     })
     .catch(error => dispatch(loginError(error.message)))
 };
+/*======================Profile Fetch =================*/
+export const requestProfile = () => {
+    return {
+        type: ActionTypes.PROFILE_REQUEST,
+    }
+}
+
+export const receiveProfile = (response) => {
+    return {
+        type: ActionTypes.PROFILE_SUCCESS,
+        user: response
+    }
+}
+
+export const profileError = (message) => {
+    return {
+        type: ActionTypes.PROFILE_FAILURE,
+        message
+    }
+}
+export const getProfile = () => (dispatch) => {
+    dispatch(requestProfile())
+    const bearer = 'Bearer ' + localStorage.getItem('token');
+    console.log(bearer);
+    axios.get('/profile', {
+        headers: {
+            Authorization: bearer,
+            'Content-Type':'application/json',
+        }
+    })
+    .then((res) => {
+        console.log(res)
+        dispatch(receiveProfile(res.data[0]))
+    })
+    .catch((err) => dispatch(profileError(err.message)));
 
 
+}
+/*======================================================*/
 /********SIGNUP ***************************************/
 export const requestSignup = (creds) => {
     return {
