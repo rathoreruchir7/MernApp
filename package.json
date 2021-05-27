@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "client": "cd client && npm start",
+    "build": "cd client && npm run build",
+    "install-client": "cd client && npm install",
     "start": "node ./bin/www",
     "dev": "concurrently -n 'server,client' -c 'green,blue' \"nodemon ./bin/www\" \"npm run client\"",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    "heroku-postbuild": "npm run install-client && npm run build"
   },
   "dependencies": {
     "concurrently": "^6.2.0",
@@ -26,6 +28,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.1.0",
-    "session-file-store": "^1.5.0"
+    "session-file-store": "^1.5.0",
+    "sharp": "^0.28.3"
   }
 }

@@ -50,6 +50,7 @@ function Profile(props){
     const classes = useStyles()
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
+    const [avatar, setAvatar] = useState("")
     const [profile, setProfile] = useState()
     const [isDisabled, setDisabled] = useState(true)
     const [edit, setEditDisabled] = useState(false)
@@ -67,31 +68,30 @@ function Profile(props){
             console.log(res)
             setName(res.data[0].name)
             setEmail(res.data[0].email)
+            setAvatar(res.data[0].avatar)  
         })
        
     },[])
 
     const handleSave=()=>{
 
-        // const formData = new FormData();
+        const formData = new FormData();
         
-        // formData.append("imageFile", profile)
-        // console.log(formData.get("imageFile"));
-        // const bearer = 'Bearer ' + localStorage.getItem('token');
-        // console.log(bearer)
-        // fetch("http://localhost:5000/" + 'imageUpload', {
-        // method: "POST",
-        // headers: {
-        //     'Authorization': bearer,
-        //     'Content-Type':'multipart/form-data',
-        //     },
-
-        //     body: formData
-        // })
-        // .then((res) => console.log(res))
-        // .catch((err) => console.log(err))
+        formData.append("imageFile", profile)
         
         const bearer = 'Bearer ' + localStorage.getItem('token');
+      
+        axios({
+            url: '/imageUpload',
+            method: "POST",
+            data: formData,
+            headers: {Authorization: bearer }
+        })
+        .then((res) => {
+            console.log(res.data)
+        })
+        .catch((err) => console.log(err))
+
     
         const payload={ name: name, email: email}
 
@@ -103,6 +103,7 @@ function Profile(props){
           }).then((res)=>{
                 setName(res.data[0].name)
                 setEmail(res.data[0].name)
+                setAvatar(res.data[0].avatar)
             
           }).catch((err)=>{
             console.log(err)
@@ -117,7 +118,7 @@ function Profile(props){
         return (
             <div className={classes.root}>
                 <Paper >
-                <div className={classes.field}><Avatar alt="Remy Sharp" src="" style={{width: '60px', height: "60px"}} /><input type="file" id="profileUrl" name="profile" style={{display: isDisabled ? "none" : ""}} onChange={(e) => setProfile(e.target.files[0])}  /> </div>
+                <div className={classes.field}><Avatar alt="Remy Sharp" src={`http://localhost:5000/${avatar}`} style={{width: '60px', height: "60px"}} /><input type="file" id="profile" name="profile" style={{display: isDisabled ? "none" : ""}} onChange={(e) => setProfile(e.target.files[0])}  /> </div>
                    <div className={classes.field}>Name: <input className={classes.inputStyle} id="title" name="title" value={name} disabled={isDisabled} onChange={(e) => setName(e.target.value)} /></div>
                    <div className={classes.field}>Email: <input  className={classes.inputStyle} id="email" name="email" value={email} disabled={isDisabled} onChange={(e) => setEmail(e.target.value)} /></div>
     

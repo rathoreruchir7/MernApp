@@ -16,7 +16,8 @@ var User = new Schema({
         default: false
     },
     avatar: {
-      type: Buffer
+      type: String,
+      default: ""
   }
 });
 
