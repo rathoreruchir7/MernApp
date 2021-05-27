@@ -9,7 +9,7 @@ import axios from 'axios';
 import { set } from 'mongoose';
 import Dialog from '@material-ui/core/Dialog';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { logoutUser } from '../redux/ActionCreators';
+import { logoutUser, getProfile } from '../redux/ActionCreators';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -71,6 +71,7 @@ function Profile(props){
     const [spinner, setSpinner] = useState(false);
 
     useEffect(() => {
+        props.getProfile()
         setSpinner(true)
         if(props.auth.user!=undefined){
             console.log(props.auth)
@@ -179,6 +180,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => ({
     logoutUser: (history) => dispatch(logoutUser(history)),
+    getProfile: () => dispatch((getProfile())),
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile))
