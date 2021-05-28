@@ -54,7 +54,6 @@ export const Auth = (state = {
                     isLoading: false,
                     isAuthenticated: true,
                     errMess: '',
-                    token: action.token,
                     user: action.user
                 };
             case ActionTypes.PROFILE_FAILURE:

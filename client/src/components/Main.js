@@ -16,16 +16,17 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => ({
     signupUser: (creds, history) => dispatch(signupUser(creds,history)),
     loginUser: (creds, history) => dispatch(loginUser(creds, history)),
-    getProfile: () => dispatch((getProfile())),
+    getProfile: (history) => dispatch((getProfile(history))),
     logoutUser: () => dispatch(logoutUser()),
 })
 
 
 function Main(props){
-
+    const [auth, setAuth] = useState(null)
     useEffect(() => {
-       props.getProfile()
-       console.log(props.auth)
+        props.getProfile(props.history)
+        setAuth(props.auth.user)
+       
     },[])
     return (
         
@@ -33,8 +34,8 @@ function Main(props){
                 <Route exact path = '/login' component={(props) => ( <Login loginUser={props.loginUser} {...props} />)} />
                 <Route exact path = '/signup' component= {(props) => ( <Signup signupUser={props.signupUser}  /> )} />
                 <Route exact path = '/profile' component={(props) => (<Profile /> )} />
-            
-                <Redirect to = {props.auth.user==undefined ? '/login' : '/profile'} />
+                
+                <Redirect to = '/login' />
              </Switch>
        
     );

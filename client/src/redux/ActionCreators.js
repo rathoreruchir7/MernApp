@@ -96,7 +96,7 @@ export const profileError = (message) => {
         message
     }
 }
-export const getProfile = () => (dispatch) => {
+export const getProfile = (history) => (dispatch) => {
     dispatch(requestProfile())
     const bearer = 'Bearer ' + localStorage.getItem('token');
     console.log(bearer);
@@ -109,6 +109,7 @@ export const getProfile = () => (dispatch) => {
     .then((res) => {
         console.log(res)
         dispatch(receiveProfile(res.data[0]))
+        history.push('/profile')
     })
     .catch((err) => {console.log(err)
         dispatch(profileError(err.message))});

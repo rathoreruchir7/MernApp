@@ -71,7 +71,7 @@ function Profile(props){
     const [spinner, setSpinner] = useState(false);
 
     useEffect(() => {
-        props.getProfile()
+       
         setSpinner(true)
         if(props.auth.user!=undefined){
             console.log(props.auth)
@@ -180,7 +180,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch) => ({
     logoutUser: (history) => dispatch(logoutUser(history)),
-    getProfile: () => dispatch((getProfile())),
+    getProfile: (history) => dispatch((getProfile(history))),
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile))
