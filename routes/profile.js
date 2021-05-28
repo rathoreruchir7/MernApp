@@ -14,7 +14,8 @@ res.header('Access-Control-Allow-Methods: GET, POST, PUT, PATCH, OPTIONS'); res.
 profileRouter.get('/', authenticate.verifyUser, (req, res, next) => {
     User.find({_id: req.user.id})
     .then((response) => {
-        
+        res.statusCode=200
+        res.setHeader("Content-Type", "application/json")
         res.json(response)
     })
     .catch((err) => next(err))
