@@ -122,7 +122,96 @@ export const getProfile = (history) => (dispatch) => {
 
 
 }
-/*======================================================*/
+/*======================UPLOAD AVATAR==============================*/
+export const requestUpload = () => {
+    return {
+        type: ActionTypes.UPLOAD_REQUEST,
+    }
+}
+
+export const receiveUpload = (response) => {
+    return {
+        type: ActionTypes.UPLOAD_SUCCESS,
+        user: response
+    }
+}
+
+export const uploadError = (message) => {
+    return {
+        type: ActionTypes.UPLOAD_FAILURE,
+        message
+    }
+}
+
+export const uploadProfile = (formData, history) => (dispatch) => {
+    dispatch(requestUpload())
+    if(localStorage.getItem("token")){
+        const bearer = 'Bearer ' + localStorage.getItem('token');
+       return axios({
+            url: '/imageUpload',
+            method: "POST",
+            data: formData,
+            headers: {Authorization: bearer }
+        })
+        .then((res) => {
+            console.log(res.data)
+            dispatch(receiveUpload(res.data[0]))
+            return res;
+        })
+        .catch((err) => {
+            console.log(err)
+            dispatch(uploadError(err))
+            return err
+        })
+    }
+
+}
+
+/******************************Update Req********************* */
+export const requestUpdate = () => {
+    return {
+        type: ActionTypes.UPDATE_REQUEST,
+    }
+}
+
+export const receiveUpdate = (response) => {
+    return {
+        type: ActionTypes.UPDATE_SUCCESS,
+        user: response
+    }
+}
+
+export const updateError = (message) => {
+    return {
+        type: ActionTypes.UPDATE_FAILURE,
+        message
+    }
+}
+
+export const updateProfile = (payload, history) => (dispatch) => {
+    dispatch(requestUpdate())
+    if(localStorage.getItem("token")){
+        const bearer = 'Bearer ' + localStorage.getItem('token');
+        return axios({
+            url: '/profile',
+            method: 'PATCH',
+            data: payload,
+
+            headers: {Authorization: bearer }
+          }).then((res)=>{
+                console.log(res)
+                dispatch(receiveUpload(res.data[0]))
+                return res
+            
+          }).catch((err)=>{
+            console.log(err)
+            dispatch(updateError(err))
+            return err;
+          })
+    }
+
+}
+
 /********SIGNUP ***************************************/
 export const requestSignup = (creds) => {
     return {

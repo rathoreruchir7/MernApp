@@ -9,7 +9,7 @@ import axios from 'axios';
 import { set } from 'mongoose';
 import Dialog from '@material-ui/core/Dialog';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { logoutUser, getProfile } from '../redux/ActionCreators';
+import { logoutUser, getProfile, uploadProfile, updateProfile } from '../redux/ActionCreators';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -92,50 +92,38 @@ function Profile(props){
 
 
     const handleSave=()=>{
-
+        setSpinner(true)
         const formData = new FormData();
-        
         formData.append("imageFile", profile)
-        
-        const bearer = 'Bearer ' + localStorage.getItem('token');
-
         if(profile){
-            setSpinner(true)
-            axios({
-                url: '/imageUpload',
-                method: "POST",
-                data: formData,
-                headers: {Authorization: bearer }
-            })
-            .then((res) => {
-                console.log(res.data)
-                setAvatar(res.data[0].avatar)
-                setSpinner(false)
-            })
-            .catch((err) => console.log(err))
+          
+            console.log(spinner)
+            props.uploadProfile(formData, props.history)
+            
+           
         }
         
-
-    
         const payload={ name: name, email: email}
+        setSpinner(true)
+        props.updateProfile(payload, props.history)
+       
+        // axios({
+        //     url: '/profile',
+        //     method: 'PATCH',
+        //     data: payload,
 
-        axios({
-            url: '/profile',
-            method: 'PATCH',
-            data: payload,
-
-            headers: {Authorization: bearer }
-          }).then((res)=>{
-                setName(res.data[0].name)
-                setEmail(res.data[0].email)
-                setAvatar(res.data[0].avatar)
-                setEditDisabled(false)
-                setDisabled(true)
-                alert("Profile Updated successfully!")
+        //     headers: {Authorization: bearer }
+        //   }).then((res)=>{
+        //         setName(res.data[0].name)
+        //         setEmail(res.data[0].email)
+        //         setAvatar(res.data[0].avatar)
+        //         setEditDisabled(false)
+        //         setDisabled(true)
+        //         alert("Profile Updated successfully!")
             
-          }).catch((err)=>{
-            console.log(err)
-          })
+        //   }).catch((err)=>{
+        //     console.log(err)
+        //   })
     }
 
     const handleEdit=()=>{
@@ -143,7 +131,7 @@ function Profile(props){
         setDisabled(false)
     }
 
-        if(props.auth.user!=undefined){
+        if(!spinner){
             return (
                 <div className={classes.root}>
                     <Dialog open={open} onClose={handleClose}>
@@ -181,6 +169,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => ({
     logoutUser: (history) => dispatch(logoutUser(history)),
     getProfile: (history) => dispatch((getProfile(history))),
+    uploadProfile: (formData, history) => dispatch((uploadProfile(formData, history))),
+    updateProfile: (payload, history) => dispatch((updateProfile(payload, history)))
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile))

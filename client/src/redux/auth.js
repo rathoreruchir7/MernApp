@@ -62,6 +62,59 @@ export const Auth = (state = {
                     isAuthenticated: false,
                     errMess: action.message
                 };
+
+            case ActionTypes.PROFILE_REQUEST:
+                return {...state,
+                    isLoading: true,
+                    isAuthenticated: false,
+                    // user: action.creds
+                };
+            case ActionTypes.PROFILE_SUCCESS:
+                return {...state,
+                    isLoading: false,
+                    isAuthenticated: true,
+                    errMess: '',
+                    user: action.user
+                };
+            case ActionTypes.PROFILE_FAILURE:
+                return {...state,
+                    isLoading: false,
+                    isAuthenticated: false,
+                    errMess: action.message
+                };
+            case ActionTypes.UPLOAD_REQUEST:
+                return {...state,
+                    isLoading: true,
+                    // user: action.creds
+                };
+            case ActionTypes.UPLOAD_SUCCESS:
+                return {...state,
+                    isLoading: false,
+                    errMess: '',
+                    user: action.user
+                };
+            case ActionTypes.UPLOAD_FAILURE:
+                return {...state,
+                    isLoading: false,
+                    errMess: action.message
+                };
+
+            case ActionTypes.UPDATE_REQUEST:
+                return {...state,
+                    isLoading: true,
+                    // user: action.creds
+                };
+            case ActionTypes.UPDATE_SUCCESS:
+                return {...state,
+                    isLoading: false,
+                    errMess: '',
+                    user: action.user
+                };
+            case ActionTypes.UPDATE_FAILURE:
+                return {...state,
+                    isLoading: false,
+                    errMess: action.message
+                };
         default:
             return state
     }
