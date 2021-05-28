@@ -98,21 +98,27 @@ export const profileError = (message) => {
 }
 export const getProfile = (history) => (dispatch) => {
     dispatch(requestProfile())
-    const bearer = 'Bearer ' + localStorage.getItem('token');
-    console.log(bearer);
-    axios.get('/profile', {
-        headers: {
-            Authorization: bearer,
-            'Content-Type':'application/json',
-        }
-    })
-    .then((res) => {
-        console.log(res)
-        dispatch(receiveProfile(res.data[0]))
-        history.push('/profile')
-    })
-    .catch((err) => {console.log(err)
+
+    if(localStorage.getItem("token")){
+        const bearer = 'Bearer ' + localStorage.getItem('token');
+        console.log(bearer);
+        axios.get('/profile', {
+            headers: {
+                Authorization: bearer,
+                'Content-Type':'application/json',
+            }
+        })
+        .then((res) => {
+            console.log(res)
+            dispatch(receiveProfile(res.data[0]))
+            history.push('/profile')
+        })
+        .catch((err) => {console.log(err)
         dispatch(profileError(err.message))});
+    }
+    else{
+        dispatch(profileError("token expired or absent"))
+    }
 
 
 }
