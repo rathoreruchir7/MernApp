@@ -19,12 +19,12 @@ profileRouter.get('/', authenticate.verifyUser, (req, res, next) => {
     })
     .catch((err) => next(err))
 })
-.post('/', authenticate.verifyUser, (req, res, next) => {
+.post(authenticate.verifyUser, (req, res, next) => {
     res.statusCode = 200;
     res.setHeader("Content-Type", "application/json");
     res.json("POST operation on this api route is not allowed")
 })
-.patch('/', authenticate.verifyUser, (req, res, next) => {
+.patch( authenticate.verifyUser, (req, res, next) => {
     if(req.body.name && req.body.email){
         User.updateMany({ _id: req.user.id }, {$set: { name: req.body.name, email: req.body.email}})
         .then((resp) => {
