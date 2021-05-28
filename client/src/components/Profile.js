@@ -74,7 +74,7 @@ function Profile(props){
        
         setSpinner(true)
         if(props.auth.user!=undefined){
-            console.log(props.auth)
+            // console.log(props.auth)
             setAvatar(props.auth.user.avatar)
             setName(props.auth.user.name)
             setEmail(props.auth.user.email)
@@ -97,7 +97,7 @@ function Profile(props){
         formData.append("imageFile", profile)
         if(profile){
           
-            console.log(spinner)
+            // console.log(spinner)
             props.uploadProfile(formData, props.history)
             
            

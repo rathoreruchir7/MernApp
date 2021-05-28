@@ -27,7 +27,7 @@ export const loginError = (message) => {
 export const loginUser = (creds, history) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestLogin(creds))
-    console.log(localStorage.getItem("token"));
+    // console.log(localStorage.getItem("token"));
     
     return fetch('/users/login',{
         method: 'POST',
@@ -39,19 +39,19 @@ export const loginUser = (creds, history) => (dispatch) => {
     
     })
     .then(response => {
-        console.log(response);
+        // console.log(response);
         if (response.ok) {
-            console.log(response);
+            // console.log(response);
             return response;
         } else {
             var error = new Error('Error ' + response.status + ': ' + response.statusText);
             error.response = response;
-            console.log(error)
+            // console.log(error)
             throw error;
         }
         },
         error => {
-            console.log(error)
+            // console.log(error)
             throw error;
         })
     .then(response => response.json())
@@ -59,7 +59,7 @@ export const loginUser = (creds, history) => (dispatch) => {
         if (response.success) {
             // If login was successful, set the token in local storage
             localStorage.setItem('token', response.token);
-            console.log(response.response)
+            // console.log(response.response)
             // localStorage.setItem('creds', JSON.stringify(creds));
             // Dispatch the success action
             
@@ -70,7 +70,7 @@ export const loginUser = (creds, history) => (dispatch) => {
             var error = new Error('Error ' + response.status);
             alert(error);
             error.response = response;
-            console.log(error)
+            // console.log(error)
             throw error;
         }
     })
@@ -101,7 +101,7 @@ export const getProfile = (history) => (dispatch) => {
 
     if(localStorage.getItem("token")){
         const bearer = 'Bearer ' + localStorage.getItem('token');
-        console.log(bearer);
+        // console.log(bearer);
         axios.get('/profile', {
             headers: {
                 Authorization: bearer,
@@ -109,11 +109,12 @@ export const getProfile = (history) => (dispatch) => {
             }
         })
         .then((res) => {
-            console.log(res)
+            // console.log(res)
             dispatch(receiveProfile(res.data[0]))
             history.push('/profile')
         })
-        .catch((err) => {console.log(err)
+        .catch((err) => {
+            // console.log(err)
         dispatch(profileError(err.message))});
     }
     else{
@@ -154,12 +155,12 @@ export const uploadProfile = (formData, history) => (dispatch) => {
             headers: {Authorization: bearer }
         })
         .then((res) => {
-            console.log(res.data)
+            // console.log(res.data)
             dispatch(receiveUpload(res.data[0]))
             return res;
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
             dispatch(uploadError(err))
             return err
         })
@@ -199,12 +200,12 @@ export const updateProfile = (payload, history) => (dispatch) => {
 
             headers: {Authorization: bearer }
           }).then((res)=>{
-                console.log(res)
+                // console.log(res)
                 dispatch(receiveUpload(res.data[0]))
                 return res
             
           }).catch((err)=>{
-            console.log(err)
+            // console.log(err)
             dispatch(updateError(err))
             return err;
           })
@@ -237,7 +238,7 @@ export const signupError = (message) => {
 export const signupUser = (creds, history) => (dispatch) => {
     // We dispatch requestLogin to kickoff the call to the API
     dispatch(requestSignup(creds))
-    console.log(JSON.stringify(creds));
+    // console.log(JSON.stringify(creds));
     return fetch('/users/signup', {
         method: 'POST',
         headers: { 
@@ -248,9 +249,9 @@ export const signupUser = (creds, history) => (dispatch) => {
     
     })
     .then(response => {
-        console.log(response);
+        // console.log(response);
         if (response.ok) {
-            console.log(response);
+            // console.log(response);
             return response;
         } else {
             var error = new Error('Error ' + response.status + ': ' + response.statusText);
