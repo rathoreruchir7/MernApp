@@ -110,8 +110,14 @@ export const getProfile = (history) => (dispatch) => {
         })
         .then((res) => {
             console.log(res)
-            dispatch(receiveProfile(res.data[0]))
-            history.push('/profile')
+            if(res.data[0]){
+                dispatch(receiveProfile(res.data[0]))
+                history.push('/profile')
+            }
+            else{
+                dispatch(profileError("token expired or absent"))
+            }
+                
         })
         .catch((err) => {
             // console.log(err)
